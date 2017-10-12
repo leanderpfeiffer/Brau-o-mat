@@ -7,16 +7,8 @@
 
 </head>
 <body>
-	<ul class="navbar">
-		<li><a href="http://192.168.1.36/thermometer/" class="active">Home</a></li>
-		<li><a href="#news">News</a></li>
-		<li><a href="#contact">Contact</a></li>
-		<li><a href="#abaout">About</a></li>
-		<li><a href="http://192.168.1.36/thermometer/settings.php" class="settings">Settings</a></li>
-	</ul>
-
-
-	<div class="content">
+	
+	
 
 	<h1>Brau-omat</h1>
 	<p>Die aktuelle Temperatur beträgt: </p>
@@ -46,6 +38,6 @@
 		?>
 		<br>
 	
-	</div>
+	
 </body>
 </html>
