@@ -2,42 +2,50 @@
 <head>
 	<title>Brau-omat</title>
 	<meta http-equiv="refresh" content=" 5;
-		URL=http://192.168.1.36/thermometer/">
+		URL=http://192.168.178.63/Brau-omat/">
 		<link href="main.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-	
-	
+	<ul class="navbar">
+		<li><a href="http://192.168.178.63/Brau-omat/" class="active">Home</a></li>
+		<li><a href="#news">News</a></li>
+		<li><a href="#contact">Contact</a></li>
+		<li><a href="#abaout">About</a></li>
+		<li><a href="http://192.168.178.63/Brau-omat/settings.php" class="settings">Settings</a></li>
+	</ul>
 
-	<h1>Brau-omat</h1>
-	<p>Die aktuelle Temperatur beträgt: </p>
-		<?php
-		$fp = fopen("temperatur.txt","r");
-		if($fp){
-			while(!feof($fp)){
-				$zeile = fgets($fp, 100);
-				echo "<p>$zeile °C</p>";
-				$temp = floatval($zeile);
-				
-				if($temp < 20){
-					echo "<p class=\"hot\">Es ist zu kalt!</p>";
-				}
-				elseif($temp > 25){
-					echo "<p class=\"hot\">Es ist zu heiß!</p>";
-				}
-				else{
-					echo "Alles gut";
 
+		<div class="content">	<!--seperates navbar from body-->
+
+		<h1>Brau-omat</h1>
+		<p>Die aktuelle Temperatur beträgt: </p>
+			<?php
+				$fp = fopen("/sys/devices/w1_bus_master1/28-051670b0a3ff/w1_slave","r");
+				if($fp){
+					$zeile = fread($fp, 200); 
+					$tempStr = substr($zeile,-6);
+					$temp = floatval($tempStr);
+					$temp = $temp / 1000;
+					echo "<p>$temp °C</p>";
+					$maxTemp = $_GET["temp"];
+					if($temp < 20){
+						echo "<p class=\"hot\">Es ist zu kalt!</p>";
+					}
+					elseif($temp > $maxTemp){
+						echo "<p class=\"hot\">Es ist zu heiß!</p>";
+						echo $maxTemp;
+					}
+					else{
+						echo "Alles gut";
+					}
+					fclose($fp);
 				}
-			}
-			fclose($fp);
-		}
-		else
-			echo "Data not found";
+				else
+					echo "Data not found";
 		?>
 		<br>
 	
-	
+	</div>
 </body>
 </html>
