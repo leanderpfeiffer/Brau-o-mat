@@ -1,10 +1,27 @@
 <html>
 <head>
 	<title>Brau-omat</title>
-	<meta http-equiv="refresh" content=" 5;
-		URL=http://192.168.178.63/Brau-omat/">
-		<link href="main.css" rel="stylesheet" type="text/css" />
 
+		<link href="main.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		var i = 0;
+		function refreshTemp(){
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if(this.readyState == 4 && this.status == 200){
+					document.getElementById("dynamic").innerHTML = this.responseText;
+				}
+			};
+		xmlhttp.open("GET","term.php",true);
+		xmlhttp.send();
+		i++;
+		console.log(i);
+		};
+		function start(){
+			document.getElementById("test").innerHTML = "";
+			setInterval(refreshTemp, 1000);
+		};
+	</script>
 </head>
 <body>
 	<ul class="navbar">
@@ -20,31 +37,8 @@
 
 		<h1>Brau-omat</h1>
 		<p>Die aktuelle Temperatur beträgt: </p>
-			<?php
-				$fp = fopen("/sys/devices/w1_bus_master1/28-051670b0a3ff/w1_slave","r");
-				if($fp){
-					$zeile = fread($fp, 200); 
-					$tempStr = substr($zeile,-6);
-					$temp = floatval($tempStr);
-					$temp = $temp / 1000;
-					echo "<p>$temp °C</p>";
-					$maxTemp = $_GET["temp"];
-					if($temp < 20){
-						echo "<p class=\"hot\">Es ist zu kalt!</p>";
-					}
-					elseif($temp > $maxTemp){
-						echo "<p class=\"hot\">Es ist zu heiß!</p>";
-						echo $maxTemp;
-					}
-					else{
-						echo "Alles gut";
-					}
-					fclose($fp);
-				}
-				else
-					echo "Data not found";
-		?>
-		<br>
+		<div id="dynamic"></div>
+		<div id="test"><button type="button" onclick="start()">Start</button></div>
 	
 	</div>
 </body>
