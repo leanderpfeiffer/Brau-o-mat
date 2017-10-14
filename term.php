@@ -1,17 +1,22 @@
 
 			<?php
+				session_start();
 				$fp = fopen("/sys/devices/w1_bus_master1/28-051670b0a3ff/w1_slave","r");
 				if($fp){
 					$zeile = fread($fp, 200); 
-					$tempStr = substr($zeile,-6);
+					$termStr = substr($zeile,-6);
+					$term = floatval($termStr);
+					$term = $term / 1000;
+					$bufferStr = $_SESSION["buffer"];
+					$tempStr = $_SESSION["temperature"];
+					echo "<p><strong>$term °C</strong></p>";
+					echo "<aside>Die Richttemperatur beträgt: $tempStr °C<br>Der Buffer beträgt: $bufferStr °C</aside>";
 					$temp = floatval($tempStr);
-					$temp = $temp / 1000;
-					echo "<p>$temp °C</p>";
-					
-					if($temp < 20){
+					$buffer = floatval($bufferStr); 
+					if($term < $temp - $buffer){
 						echo "<p class=\"hot\">Es ist zu kalt!</p>";
 					}
-					elseif($temp > 25){
+					elseif($term > $temp + $buffer){
 						echo "<p class=\"hot\">Es ist zu heiß!</p>";
 						
 					}
