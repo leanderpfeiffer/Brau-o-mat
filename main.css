@@ -48,12 +48,22 @@ h1{
 p{
   font-size: 20px;
 }
+#warning{
+	float: top-left;
+
+
+}
 .hot{
 	color: red;
-	font-size: 30px;
+	font-size: 20px;
 }
 .settings_a{
 	background-color: #4CAF50;
 	color: white;
 	float: right;
+}
+.timer{
+	float:right;
+
+
 }
