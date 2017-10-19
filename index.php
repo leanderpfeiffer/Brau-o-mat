@@ -11,7 +11,10 @@ if (!isset($temperature) OR empty($temperature)){
 
 $_SESSION["buffer"] = $buffer;
 $_SESSION["temperature"] = $temperature;
-
+$time = $_SESSION["time"];
+if(!isset($time) OR empty($time)){
+	$_SESSION["time"]=5400;
+}
 
 ?>
 
@@ -37,8 +40,8 @@ $_SESSION["temperature"] = $temperature;
 		
 		function start(){
 		
-			
-			document.getElementById("test").innerHTML = "<p>Die aktuelle Temperatur beträgt: </p>";
+			console.log("Start");
+			//document.getElementById("test").innerHTML = "<p>Die aktuelle Temperatur beträgt: </p>";
 			setInterval(refreshTemp, 1000);
 			
 		};
@@ -57,10 +60,10 @@ $_SESSION["temperature"] = $temperature;
 		<div class="content">	<!--seperates navbar from body-->
 
 		<h1>Brau-omat</h1>
-		
-		<div id="test"><button type="button" onclick="start()">Start</button></div>
+		<script>start();</script>
+		<p>Die aktuelle Temperatur beträgt: </p>
 		<div id="dynamic"></div>
-		
+
 	
 	</div>
 </body>
