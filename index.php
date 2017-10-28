@@ -1,70 +1,48 @@
 <?php
-session_start();
-$buffer = $_POST["buff"];
-$temperature = $_POST["temp"];
-if (!isset($buffer) OR empty($buffer)){
-	$buffer = 5;
-}
-if (!isset($temperature) OR empty($temperature)){
-	$temperature = 25;
-}
-
-$_SESSION["buffer"] = $buffer;
-$_SESSION["temperature"] = $temperature;
-$time = $_SESSION["time"];
-if(!isset($time) OR empty($time)){
-	$_SESSION["time"]=5400;
-}
-
+	session_start();
+	session_unset();
+	session_destroy();
 ?>
 
 <html>
 <head>
 	<title>Brau-omat</title>
-
-		<link href="main.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript">
-		var i = 0;
-		function refreshTemp(){
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-				if(this.readyState == 4 && this.status == 200){
-					document.getElementById("dynamic").innerHTML = this.responseText;
-				}
-			};
-			xmlhttp.open("GET","term.php",true);
-			xmlhttp.send();
-			i++;
-			console.log(i);
-		};
-		
-		function start(){
-		
-			console.log("Start");
-			//document.getElementById("test").innerHTML = "<p>Die aktuelle Temperatur beträgt: </p>";
-			setInterval(refreshTemp, 1000);
-			
-		};
-	</script>
+	<!-- <link href="main.css" rel="stylesheet" type="text/css" /> -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<ul class="navbar">
-		<li><a href="#same" class="active">Home</a></li>
-		<li><a href="#news">News</a></li>
-		<li><a href="#contact">Contact</a></li>
-		<li><a href="#abaout">About</a></li>
-		<li><a href="/Brau-omat/settings.php" class="settings">Settings</a></li>
-	</ul>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Brau-omat</a>
+		</div>
+		<ul class="navbar-nav">
+			<li class="nav-item"><a href="#Home" class="nav-link disabled">Home</a></li>
+			<li class="nav-item"><a href="#News" class="nav-link disabled">News</a></li>
+			<li class="nav-item"><a href="#Contact" class="nav-link disabled">Contact</a></li>
+			<li class="nav-item"><a href="#About" class="nav-link disabled">About</a></li>
+			<li class="nav-item"><a href="#Settings" class="nav-link disabled">Settings</a></li>
+		</ul>
+	</nav>
 
 
-		<div class="content">	<!--seperates navbar from body-->
-
+	<div class="container jumbotron">
 		<h1>Brau-omat</h1>
-		<script>start();</script>
-		<p>Die aktuelle Temperatur beträgt: </p>
-		<div id="dynamic"></div>
-
-	
+		<form action="login.php" method="post"class="col-sm-4">
+			<div class="form-group">
+				<label for="number">Anzahl der zuplanenden Maischevorgänge:</label>
+				<input type="number" class="form-control" name="count">
+			</div>
+			<button type="submit" class="btn btn-primary">Los gehts!</button>
+		</form>
 	</div>
+
+	<!-- JQuery Plugin -->
+	<script src="assets/js/jquery.min.js"></script>
+
+	<!-- Popper Plugin -->
+	<script src="assets/js/popper.min.js"></script>
+	
+	<!-- Bootstrap JS Plugin -->
+	<script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>
