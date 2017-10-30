@@ -10,18 +10,41 @@
 	<p>test </p>
 	<?php
 	session_start();
-	
 	$count = $_SESSION["count"];
-	
-	$buffer = $_POST["buff"];
-	$_SESSION["buffer"] = $buffer;
-	$_SESSION["startTime"] = false;
-	$_SESSION["now"] = 1;
 	$data = array();
-	for($i=1; $i<=$count; $i++){
-		$data["name".$i] = $_POST["name".$i];
-		$data["time".$i] = floatval($_POST["time".$i] * 60);
-		$data["temp".$i] = $_POST["temp".$i];
+	if($_SESSION["ref"]=="login"){
+		$buffer = $_POST["buff"];
+		$_SESSION["buffer"] = $buffer;
+		$_SESSION["startTime"] = false;
+		$_SESSION["now"] = 1;
+		$_SESSION["tempCount"] = 0;
+		$_SESSION["tempData"] = array();
+		$_SESSION["data"]=1;
+		
+		for($i=1; $i<=$count; $i++){
+			$data["name".$i] = $_POST["name".$i];
+			$data["time".$i] = floatval($_POST["time".$i] * 60);
+			$data["temp".$i] = $_POST["temp".$i];
+		}
+	var_dump($data);
+	}
+
+	if($_SESSION["ref"]=="settings"){
+		echo "Es funktioniert";
+		for($i=1; $i<=$count; $i++){
+			if(!empty($_POST["name".$i])){	
+				$data["name".$i] = $_POST["name".$i];
+			}
+			if(!empty($_POST["time".$i])){
+				$data["time".$i] = floatval($_POST["time".$i] * 60);
+			}
+			if(!empty($_POST["temp".$i])){
+				$data["temp".$i] = $_POST["temp".$i];
+			}
+		}
+		if(!empty($_POST["buffer"])){
+			$_SESSION["buffer"] = $_POST["buffer"];
+		}
 	}
 	var_dump($data);
 	$_SESSION["data"] = $data;

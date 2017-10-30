@@ -18,14 +18,34 @@
 		</ul>
 	</nav>
 	<div class="container">
-		<h1>Settings</h1>
-		<form action="index.php" method="post">
-		Richttemperatur: <input type="number" name="temp"><br>
-		Buffer: <input type="text" name="buff"><br>
-		<input type="submit">
-		</form>
-
-	</div>
+			<h1 class="display-4">Settings</h1>
+			<hr>
+			<form action="processing.php" method="post" class="col-sm-4">
+		<?php
+			session_start();
+			$count=$_SESSION["count"];
+			$_SESSION["ref"] = "settings";
+			$data = $_SESSION["data"];
+			for($i = 1; $i <= $count; $i++){
+				echo "<div class=\"form-group\">";
+				echo "<h4>Vorgang ".$i."</h4>";
+				echo "<label for=\"text\">Name:<label>";
+				echo "<input type=\"text\" class=\"form-control\" name=\"name".$i."\" placeholder=\"".$data["name".$i]."\">";
+				echo "<label for=\"number\">Zeit (in Minuten):<label>";
+				echo "<input type=\"number\" class=\"form-control\" name=\"time".$i."\" placeholder=\"".$data["time".$i]."\">";
+				echo "<label for=\"number\">Richttemperatur (in °C):<label>";
+				echo "<input type=\"number\" class=\"form-control\" name=\"temp".$i."\" placeholder=\"".$data["temp".$i]."\">";
+				echo "</div>";
+				}
+			?>
+			<div class="form-group">
+			<label for="number">Buffer (in °C):<label>
+			<input type="number" class="form-control" name="buffer" placeholder="<?php echo $_SESSION["buffer"];  ?>">
+			</div>
+			<button type="submit" class="btn btn-primary">Prozess Starten</button>
+			<form>
+			
+		</div>
 
 		<!-- JQuery Plugin -->
 	<script src="assets/js/jquery.min.js"></script>

@@ -1,33 +1,65 @@
-<html>
-<head>
-	<title>Brau-omat</title>
-	
-	<script type="text/javascript">
-		var i = 0;
-		function refreshTemp(){
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-				if(this.readyState == 4 && this.status == 200){
-					document.getElementById("dynamic").innerHTML = this.responseText;
-				}
-			};
-		xmlhttp.open("GET","term.php",true);
-		xmlhttp.send();
-		i++;
-		console.log(i);
-		};
-		function start(){
-			document.getElementById("test").innerHTML = "";
-			setInterval(refreshTemp, 1000);
-		};
-		
-	</script>
-</head>
-	<body>
+<?php
+		$servername = "localhost";
+		$username = "root";
+		$password = "raspberry";
+		$dbname = "TemperaturDaten";
 
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		
+		if($conn->connection_error){
+			die("Connection failed: " . $conn->connect_error);
+		}
+		$sql = "SELECT `counter`, `temperature` FROM `test3` ORDER BY `counter` ASC";
+		$result = $conn->query($sql);
+
+		$conn->close();
+		function convertToTime($count){
+			$minTime = floor($count / 60);
+			$sekTime = $count % 60;
+			$sekStr = strval($sekTime);
+			$minStr = strval($minTime);
+			if(strlen($sekStr)==1){
+				$sekStr = "0" . $sekStr;	
+			}
+			$timeStr = $minStr . ":" . $sekStr;
+			return $timeStr;
+		}
+?> 
+
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+	['Counter','Temperatur'],
 	
-	<div id="dynamic"></div>
-	<div id="test"><button type="button" onclick="start()">Start</button></div>
-	
-	</body>
+
+	<?php 
+		while($row = $result->fetch_assoc() AND $i < 10)
+		{
+			echo "[ '". convertToTime($row["counter"]) . "', ".floatval($row["temperature"])." ], ";
+			
+		} 
+	?>
+        ]);
+
+        var options = {
+          
+          
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+  </body>
 </html>
