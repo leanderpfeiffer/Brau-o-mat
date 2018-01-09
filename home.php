@@ -30,18 +30,22 @@ session_start();
 			setInterval(refreshTemp, 1000);
 			
 		};
+
+		function openGrapf(){
+			console.log("triggered");
+			window.location.href = "/Brau-omat/graph.php";
+		
+		}
 	</script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light  sticky-top">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">Brau-omat</a>
 		</div>
 		<ul class="navbar-nav">
 			<li class="nav-item active"><a href="#same" class="nav-link">Home</a></li>
-			<li class="nav-item"><a href="#news" class="nav-link">News</a></li>
-			<li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-			<li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+			<li class="nav-item"><a href="/Brau-omat/graph.php" class="nav-link">Graph</a></li>
 			<li class="nav-item"><a href="/Brau-omat/settings.php" class="nav-link">Settings</a></li>
 		</ul>
 	</nav>

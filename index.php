@@ -11,15 +11,13 @@
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light  sticky-top">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">Brau-omat</a>
 		</div>
 		<ul class="navbar-nav">
 			<li class="nav-item"><a href="#Home" class="nav-link disabled">Home</a></li>
-			<li class="nav-item"><a href="#News" class="nav-link disabled">News</a></li>
-			<li class="nav-item"><a href="#Contact" class="nav-link disabled">Contact</a></li>
-			<li class="nav-item"><a href="#About" class="nav-link disabled">About</a></li>
+			<li class="nav-item"><a href="#News" class="nav-link disabled">Graph</a></li>
 			<li class="nav-item"><a href="#Settings" class="nav-link disabled">Settings</a></li>
 		</ul>
 	</nav>

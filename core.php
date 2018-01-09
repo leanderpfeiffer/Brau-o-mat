@@ -62,7 +62,7 @@
 		$sql = "INSERT INTO " . $user . " (time_in_progress, progress, temperature)
 					VALUES (" . $time . ", " . $now . ", " . $term . "); ";
 		if($conn->query($sql) === TRUE){
-			echo "Success";
+			
 		}else{
 			echo "Error: ".$sql."<br>".$conn->error;
 		}
@@ -95,10 +95,16 @@
 				}
 			
 			echo "</div>";
+			echo "<div class=\"col-md-4\">";
+				echo "<p>Ihre Richttemperatur beträgt: <strong>".$temp."°C</strong>";
+				echo "<p>Ihr Buffer beträgt: <strong>".$buff."°C</strong>";
+			echo "</div>";
 		
 		echo "</div>";
 	}else{
-		echo "<h3>Brau-Vorgang beendet!</h3>";
-		//echo "<script>window.location.href("http://stackoverflow.com");</script>";
+		echo " <h1 class=\"display-4\">Home</h1>";
+		echo "<hr>";
+		echo "<br><div  class=\"alert alert-primary\" role=\"alert\">Brau-Vorgang beendet!</div>";
+		echo "<script>openGrapf()</script>";
 	}
 ?>
