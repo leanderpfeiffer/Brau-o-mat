@@ -1,4 +1,11 @@
 <html>
+<?php
+	session_start();
+	if($_GET["temp"]){
+	$_SESSION["maxTemp"] = $_GET["temp"];
+	}
+	$maxTemp = $_SESSION["maxTemp"];
+?>
 <head>
 	<title>Brau-omat</title>
 	<meta http-equiv="refresh" content=" 5;
@@ -12,7 +19,7 @@
 		<li><a href="#news">News</a></li>
 		<li><a href="#contact">Contact</a></li>
 		<li><a href="#abaout">About</a></li>
-		<li><a href="http://192.168.178.63/Brau-omat/settings.php" class="settings">Settings</a></li>
+		<li><a href="/Test/settings.php" class="settings">Settings</a></li>
 	</ul>
 
 
@@ -28,7 +35,7 @@
 					$temp = floatval($tempStr);
 					$temp = $temp / 1000;
 					echo "<p>$temp °C</p>";
-					$maxTemp = $_GET["temp"];
+					
 					if($temp < 20){
 						echo "<p class=\"hot\">Es ist zu kalt!</p>";
 					}
