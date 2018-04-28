@@ -13,7 +13,7 @@
 	</ul>
 	<div class="content">
 		<h1>Settings</h1>
-		<form action="index.php" method="get">
+		<form action="index.php" method="post">
 		Max Temperature: <input type="text" name="temp"><br>
 		<input type="submit">
 		</form>

@@ -1,17 +1,33 @@
 <html>
-<?php
-	session_start();
-	if($_GET["temp"]){
-	$_SESSION["maxTemp"] = $_GET["temp"];
-	}
-	$maxTemp = $_SESSION["maxTemp"];
-?>
 <head>
 	<title>Brau-omat</title>
-	<meta http-equiv="refresh" content=" 5;
-		URL=http://192.168.178.63/Brau-omat/">
-		<link href="main.css" rel="stylesheet" type="text/css" />
 
+		<link href="main.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		var i = 0;
+		//AJAX Funktion
+		function refreshTemp(){
+			//XMLHttpRequest Objekt wird erstellt
+			var xmlhttp = new XMLHttpRequest();
+			
+			//Bei änderung des Fortschritt des XMLHttpRequest Objekt wird geprüft ob es fertig ist
+			xmlhttp.onreadystatechange = function() {
+					if(this.readyState == 4 && this.status == 200){
+						
+						//Antwort des Servers wird verarbeitet
+						document.getElementById("dynamic").innerHTML = this.responseText;
+					}
+				};
+			//Ziel und Methode der Anfrage werden festgelegt
+			xmlhttp.open("GET","term.php",true);
+			//Anfrage wird abgeschickt
+			xmlhttp.send();
+		};
+		function start(){
+			document.getElementById("test").innerHTML = "";
+			setInterval(refreshTemp, 1000);
+		};
+	</script>
 </head>
 <body>
 	<ul class="navbar">
@@ -19,7 +35,7 @@
 		<li><a href="#news">News</a></li>
 		<li><a href="#contact">Contact</a></li>
 		<li><a href="#abaout">About</a></li>
-		<li><a href="/Test/settings.php" class="settings">Settings</a></li>
+		<li><a href="http://192.168.178.63/Brau-omat/settings.php" class="settings">Settings</a></li>
 	</ul>
 
 
@@ -27,31 +43,8 @@
 
 		<h1>Brau-omat</h1>
 		<p>Die aktuelle Temperatur beträgt: </p>
-			<?php
-				$fp = fopen("/sys/devices/w1_bus_master1/28-051670b0a3ff/w1_slave","r");
-				if($fp){
-					$zeile = fread($fp, 200); 
-					$tempStr = substr($zeile,-6);
-					$temp = floatval($tempStr);
-					$temp = $temp / 1000;
-					echo "<p>$temp °C</p>";
-					
-					if($temp < 20){
-						echo "<p class=\"hot\">Es ist zu kalt!</p>";
-					}
-					elseif($temp > $maxTemp){
-						echo "<p class=\"hot\">Es ist zu heiß!</p>";
-						echo $maxTemp;
-					}
-					else{
-						echo "Alles gut";
-					}
-					fclose($fp);
-				}
-				else
-					echo "Data not found";
-		?>
-		<br>
+		<div id="dynamic"></div>
+		<div id="test"><button type="button" onclick="start()">Start</button></div>
 	
 	</div>
 </body>
