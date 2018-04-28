@@ -1,19 +1,27 @@
 
 			<?php
+				session_start();
+				//Temperatur wird ausgelesen
 				$fp = fopen("/sys/devices/w1_bus_master1/28-051670b0a3ff/w1_slave","r");
 				if($fp){
 					$zeile = fread($fp, 200); 
-					$tempStr = substr($zeile,-6);
-					$temp = floatval($tempStr);
-					$temp = $temp / 1000;
-					echo "<p>$temp °C</p>";
+					$termStr = substr($zeile,-6);
+					$term = floatval($termStr);
+					$term = $term / 1000;
 					
-					if($temp < 20){
+					//Temperatur wird ausgegeben
+					echo "<p><strong>$term °C</strong></p>";
+					
+					//Werte werden über Session abgerufen
+					$maxTemp = $_SESSION["maxTemp"];
+					$minTemp = $_SESSION["minTemp"];
+					
+					//Warnungen werden je nach Temperatur angezeigt
+					if($term < $maxTemp){
 						echo "<p class=\"hot\">Es ist zu kalt!</p>";
 					}
-					elseif($temp > 25){
+					elseif($term > $minTemp){
 						echo "<p class=\"hot\">Es ist zu heiß!</p>";
-						
 					}
 					else{
 						echo "Alles gut";
