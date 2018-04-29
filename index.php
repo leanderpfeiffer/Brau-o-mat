@@ -1,67 +1,78 @@
+<!DOCTYPE html>
 <?php
-session_start();
-$buffer = $_POST["buff"];
-$temperature = $_POST["temp"];
-if (!isset($buffer) OR empty($buffer)){
-	$buffer = 5;
-}
-if (!isset($temperature) OR empty($temperature)){
-	$temperature = 25;
-}
-
-$_SESSION["buffer"] = $buffer;
-$_SESSION["temperature"] = $temperature;
-
-
+// zerstört die letzte Session
+	session_start();
+	session_unset();
+	session_destroy();
 ?>
-
 <html>
-<head>
-	<title>Brau-omat</title>
+  <head>
+    <meta charset="utf-8">
+    <title>Brau-omat 2.0</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
 
-		<link href="main.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript">
-		var i = 0;
-		function refreshTemp(){
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-				if(this.readyState == 4 && this.status == 200){
-					document.getElementById("dynamic").innerHTML = this.responseText;
-				}
-			};
-			xmlhttp.open("GET","term.php",true);
-			xmlhttp.send();
-			i++;
-			console.log(i);
-		};
-		
-		function start(){
-		
-			
-			document.getElementById("test").innerHTML = "<p>Die aktuelle Temperatur beträgt: </p>";
-			setInterval(refreshTemp, 1000);
-			
-		};
-	</script>
-</head>
-<body>
-	<ul class="navbar">
-		<li><a href="#same" class="active">Home</a></li>
-		<li><a href="#news">News</a></li>
-		<li><a href="#contact">Contact</a></li>
-		<li><a href="#abaout">About</a></li>
-		<li><a href="/Brau-omat/settings.php" class="settings">Settings</a></li>
-	</ul>
+      <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<style media="screen">
+			.header{
+				color: #009688;
+				font-weight: 300
+			}
+		</style>
+  </head>
+  <body>
+
+		<nav>
+      <div class="nav-wrapper teal">
+        <a href="#" class="brand-logo center">Brau-omat</a>
+      </div>
+    </nav>
 
 
-		<div class="content">	<!--seperates navbar from body-->
+	    <div class="container">
+				<h2 class="header">Willkommen</h2>
+				<p class="flow-text">!Willkommenstext</p>
+				<div class="row">
+					<div class="col s12 m7">
+						<div class="card">
+							<div class="card-content">
+								<span class="card-title">Eigenen Brauvorgang erstellen</span>
+			          <form action="eigen.php" method="post">
+			          	<div>
+			          		<label for="text">
+			                Name ihres Brauvorgangs
+			              </label>
+			          		<input type="text" class="validate" name="user">
+			        		</div>
+			        		<div>
+			          				<label for="number">Anzahl der zuplanenden Maischevorgänge:</label>
+			          				<input type="number" class="validate" name="anzahlRasten">
+			        		</div>
+			      			<button type="submit" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">save</i></button>
+			      		</form>
+							</div>
+						</div>
+					</div>
+					<div class="col s12 m5">
+						<div class="card">
+							<div class="card-content">
+								<span class="card-title">Vorlage Aussuchen</span>
+								<p>Einen von mehreren Vorlagen auswählen und ohne große Sorgen Brauen.</p>
+								<br>
+								<form action="vorlagen.php" method="post">
+									<button type="submit" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">search</i></button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 
-		<h1>Brau-omat</h1>
-		
-		<div id="test"><button type="button" onclick="start()">Start</button></div>
-		<div id="dynamic"></div>
-		
-	
-	</div>
-</body>
+	    </div>
+
+		<!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/materialize.min.js"></script>
+  </body>
 </html>
