@@ -18,4 +18,23 @@
     echo "<input type=\"number\" name=\"richtTemp".$i."\">";
 
   }
+  function conTime(){
+		//Zeit und Zählerwerte bekommen
+		$aktuellerSchritt = $_SESSION["aktuellerSchritt"];
+		$time = $_SESSION["data"]["time".$aktuellerSchritt];
+
+		//Wenn die Zeit noch nicht null ist die Zeit weiterführen, ansonsten Zähler + 1
+
+		if($time>0){
+			$_SESSION["data"]["time".$aktuellerSchritt] = $time -1;
+      //...Rest des Timer
+
+    }else{
+      //Wenn die Zeit abgelaufen ist wird der nächste Schritt gestartet
+			$_SESSION["aktuellerSchritt"] = $aktuellerSchritt + 1;
+			$_SESSION["startTime"] = false;
+      //Ausgabe in Timer Feld
+      return "Nächster Schritt";
+		}
+	}
 ?>
