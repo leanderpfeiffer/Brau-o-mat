@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
   session_start();
+
   $data = $_SESSION["data"];
   //$_SESSION["aktuellerSchritt"] = 1;
   $aktuellerSchritt = $_SESSION["aktuellerSchritt"];
@@ -29,6 +30,7 @@
     }
     th{
       font-weight: 300;
+
     }
     .transparent{
       opacity: 0;
@@ -40,9 +42,11 @@
       var i = 0;
       window.onload = function(){
         // Bei Seiten start werden Informationen aus Php extrahiert
+
         var aktuellerSchritt = <?php echo $aktuellerSchritt; ?>;
         var anzahlRasten = <?php echo $anzahlRasten; ?>;
         var buttonPressed = <?php echo $buttonPressed; ?>;
+
         if (buttonPressed == 1) {
           // Hintergrundfarbe des Timers wird wieder weiß
           document.getElementById("Timer").classList.remove('teal');
@@ -54,24 +58,21 @@
       var timerGo = 0;
       var timerStart = 0;
       var countDownDate = 0;
-
       //Daten zum aktuellen Prozess werden gespeichert
       var richtTemp = <?php if(0 < $aktuellerSchritt and $aktuellerSchritt < $fertigBei) {
-                              echo $data["richtTemp".$aktuellerSchritt];
-                            }else{
-                                echo "\"keineRT\"";} ?>;
-                                
+        echo $data["richtTemp".$aktuellerSchritt];
+      }else{
+        echo "\"keineRT\"";} ?>;
       var buffer = <?php echo $_SESSION["buffer"]; ?>;
-
       if(richtTemp != "keineRT"){
         var minTemp = richtTemp - buffer;
         var maxTemp = richtTemp + buffer;
       }
+      //console.log(minTemp+", "+maxTemp+", "+buffer);
 
 //####################################################################################
-      // Funktion um über HTML Dom den Button wieder einzufügen
+
       function makeButton(){
-        document.getElementById("Timer").classList.add("teal");
         var card = document.getElementById("TimerContent");
         card.innerHTML="";
         var button = document.createElement("button");
@@ -102,68 +103,71 @@
         var temperaturStr = document.getElementById("AktTemp").textContent;
         var temperatur = parseFloat(temperaturStr);
 
-        // Wenn Tmeperatur richtwerte überschreitet werden Warnungen angezeigt
         if(richtTemp != "keineRT"){
-          //(Zu Warm)
           if(temperatur > maxTemp){
+
             document.getElementById("warningHot").classList.remove("transparent");
             console.log("Heiß");
             setRightTemp(1);
-          //(Zu Kalt)
           }else if(temperatur < minTemp){
+
             document.getElementById("warningCold").classList.remove("transparent");
             console.log("Kalt");
             var timerGo = 1;
-          //(Ideal)
+
           }else if(minTemp< temperatur && temperatur < maxTemp){
+
             document.getElementById("warningHot").classList.add("transparent");
             document.getElementById("warningCold").classList.add("transparent");
-
-            // Wenn die Temperatur den Idealwert erreicht hat wird der Timer gestartet
+            //Wenn die Temperatur den Idealwert erreicht hat wird der Timer gestartet
             setRightTemp(1);
             console.log("Perfekt");
+
           }
         }
       }
+
       // Aktualisiert Temperatur im SekundenTakt
       setInterval(refreshTemp, 1000);
+
 //####################################################################################
-
       function conTime(){
-        // Wenn der Timer läuft läuft er weiter
-        if(getActiveTimer() == 1){
 
-          // Ziel Zeit ermitteln
+        if(getActiveTimer() == 1){
           var countDownDate = getCountDownDate();
 
-          // Aktuelle Zeit ermitteln
+          // Get todays date and time
           var now = new Date().getTime();
 
-          // Differenz zwischen Zeiten ausrechnen
+          // Find the distance between now an the count down date
           var distance = countDownDate * 1000 - now;
-
-          // Zeit umwandeln
-          var minutes = Math.floor((distance % (1000)) / (1000 * 60));
+          console.log(countDownDate);
+          console.log(now);
+          console.log(distance);
+          // Time calculations for days, hours, minutes and seconds
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-          // Zeit anzeigen
+          // Display the result in the element with id="demo"
           document.getElementById("TimerContent").innerHTML =
           + minutes + "m " + seconds + "s ";
 
-          //Wenn Zeit abgelaufen ist Timer stoppen und Button erzeugen
+          // If the count down is finished, write some text
           if (distance < 0) {
             clearInterval(x);
+            document.getElementById("Timer").classList.add("teal");
             makeButton();
           }
         }
-        // Wenn die Temperatur stimmt wird die Startzeit ermittelt und der Timer gestartet
         if(getActiveTimer()==0 && getRightTemp()==1){
           getStartTime();
           setTimeout(setActiveTimer(1),2000);
         }
+
       }
 
-      // Startzeit über AJAX ausrechnen
       function getStartTime(){
         console.log("Los gehts");
         var xmlhttp = new XMLHttpRequest();
@@ -175,12 +179,17 @@
         };
         xmlhttp.open("GET","getStartTime.php",true);
         xmlhttp.send();
+
       }
+
       var x = setInterval(conTime, 1000);
+
+
 //####################################################################################
 
       // Bei Knopfdruck werden die Daten des nächsten Schritt geladen
       function NextStep(){
+
         // Nächster Schritt wird gestartet
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -190,6 +199,7 @@
         };
         xmlhttp.open("GET","NextStep.php",true);
         xmlhttp.send();
+
         setTimeout(refreshPage,1000);
       }
 
@@ -219,6 +229,7 @@
         return countDownDate;
       }
 //##################################################################################
+
     </script>
   </head>
 
@@ -287,6 +298,7 @@
                     if(0 < $aktuellerSchritt && $aktuellerSchritt < $fertigBei){
                       echo "<tr><th class=\"header\">Richttemperatur:</th>";
                       echo "<th>".$data["richtTemp".$aktuellerSchritt]." °C</th></tr>";
+
                     }
                   ?>
                   <tr>
@@ -316,7 +328,9 @@
               <?php
               if($aktuellerSchritt < $numberOf_MV){
                 echo "<h5 class=\"header\">Nächster Schritt:</h5>";
+
                 echo "<table><tbody>";
+
                 echo "<tr><th class=\"header\">Name:</th><th>".$data["schrittName".$nextSchritt]."</th></tr>";
                 echo "<tr><th class=\"header\">Richttemperatur:</th><th>".$data["richtTemp".$nextSchritt]." °C</th></tr>";
                 echo "<tr><th class=\"header\">Dauer:</th><th>".$data["zeit".$nextSchritt]/60 ." min</th></tr>";
