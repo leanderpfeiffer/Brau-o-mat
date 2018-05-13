@@ -1,9 +1,11 @@
 <?php
 	session_start();
+	function generateRandomString($length) {
+    		return substr(str_shuffle(str_repeat($x='1234567890', ceil($length/strlen($x)) )),1,$length);}
 	// Nutzer Angeben in Session speichern
- 	$anzahlRasten = $_POST["numberOf_MV"];
+ 	$anzahlRasten = $_POST["anzahlRasten"];
  	$_SESSION["anzahlRasten"] = $anzahlRasten;
-	$user = $_POST["user"];
+	$user = $_POST["user"].generateRandomString(3);
  	$_SESSION["last_page"] = "login";
   	$_SESSION["user"] = $user;
 
@@ -34,10 +36,10 @@
   }
   $sql = "
   CREATE TABLE ".$user." (
-  counter INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  progress INT(3),
-  temperature DECIMAL(7,3))";
-  var_dump($sql);
+  counter INT(5) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  progress INT(2),
+  temperature DECIMAL(6,3))";
+
   if($conn->query($sql) === TRUE){
 
   }else{

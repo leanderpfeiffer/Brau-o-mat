@@ -326,7 +326,7 @@
             <div class="card-content" id="NächsterSchrittInfo">
 
               <?php
-              if($aktuellerSchritt < $numberOf_MV){
+              if($aktuellerSchritt < $anzahlRasten){
                 echo "<h5 class=\"header\">Nächster Schritt:</h5>";
 
                 echo "<table><tbody>";

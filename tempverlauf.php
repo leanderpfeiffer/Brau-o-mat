@@ -1,6 +1,6 @@
-<?php
+<?php 
 	session_start();
-	$data = $_SESSION["data"];
+	$user = $_POST["user"];
 	function getData($step){
 			$servername = "localhost";
 			$username = "root";
@@ -89,27 +89,15 @@ th{
   </head>
   <body>
 		<nav>
-			<div class="nav-wrapper teal">
-				<div class="row">
-					<div class="col s0 m1 l1"></div>
-					<div class="col m5">
-						<a href="index.php" class="brand-logo" id="brand-logo">Brau-omat</a>
-					</div>
-					<div class="col m6">
-						<ul id="nav-mobile" class="right hide-on-med-and-down">
-							<li><a href="dashboard.php">Dashboard</a></li>
-							<li class="active"><a href="#">Graph</a></li>
-							<li><a href="settings.php">Einstellungen</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
+      <div class="nav-wrapper teal">
+        <a href="#" class="brand-logo center">Brau-omat</a>
+      </div>
+    </nav>
 	<div class="container">
 	<h2 class="header">Graph</h2>
 
 			<div id="curve_chart" style="width: 900px; height: 500px"></div>
-	<p class="flow-text"><div class="header">Datenkennung: </div><?php echo $_SESSION["user"];?></p>
+	<p class="flow-text"><div class="header">Datenkennung: </div><?php echo $user ;?></p>
 </div>
   </body>
 </html>

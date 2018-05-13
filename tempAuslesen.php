@@ -15,7 +15,7 @@ function getTerm(){
   }
 }
 $temperatur = getTerm();
-  if($_SESSION["aktuellerSchritt"] <= $_SESSION["numberOf_MV"]){
+  if($_SESSION["aktuellerSchritt"] <= $_SESSION["anzahlRasten"]){
 		$servername = "localhost";
 		$username = "root";
 		$password = "raspberry";

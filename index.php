@@ -68,8 +68,24 @@
 						</div>
 					</div>
 				</div>
-
+				<div class="row">
+				<div class="col s12 m5">
+					<div class="card">
+						<div class="card-content">
+							<span class="card-title">Temperaturverlauf abrufen</span>
+							<form action="tempverlauf.php" method="post">
+								<div>
+									<label for="text">
+										Datenkennung
+									</label>
+									<input type="text" class="validate" name="user">
+								</div>
+								<button type="submit" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">save</i></button>
+							</form>
+						</div>
+					</div>
 	    </div>
+		</div>
 
 		<!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
