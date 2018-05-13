@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	$data = $_SESSION["data"];
-	function getData($step){
+	function getData(){
 			$servername = "localhost";
 			$username = "root";
 			$password = "raspberry";
@@ -12,11 +12,9 @@
 			if($conn->connection_error){
 				die("Connection failed: " . $conn->connect_error);
 			}
-			if($step == "full"){
-				$sql = "SELECT `counter`, `temperature`,`progress` FROM `".$_SESSION["user"]."` ORDER BY `counter` ASC";
-			}else{
-				$sql = "SELECT `counter`, `temperature`,`progress` FROM `".$_SESSION["user"]."` WHERE `progress` = ".$step."ORDER BY `counter` ASC";
-			}
+			
+			$sql = "SELECT `counter`, `temperature`,`progress` FROM `".$_SESSION["user"]."` ORDER BY `counter` ASC";
+			
 			$result = $conn->query($sql);
 
 			$conn->close();
@@ -70,7 +68,7 @@ th{
         	var data = google.visualization.arrayToDataTable([
 		['Counter','Temperatur'],
 	<?php
-		$result = getData("full");
+		$result = getData();
 		while($row = $result->fetch_assoc() AND $i < 10)
 			{echo "[ '". convertToTime($row["counter"]) . "', ".floatval($row["temperature"])." ], ";
 			} ?> ]);
