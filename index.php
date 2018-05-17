@@ -35,26 +35,24 @@
 				<h2 class="header">Willkommen</h2>
 				<p class="flow-text">!Willkommenstext</p>
 				<div class="row">
-					<div class="col s12 m7">
-						<div class="card">
-							<div class="card-content">
-								<span class="card-title">Eigenen Brauvorgang erstellen</span>
-			          <form action="eigen.php" method="post">
-			          	<div>
-			          		<label for="text">
-			                Name ihres Brauvorgangs
-			              </label>
-			          		<input type="text" class="validate" name="user">
-			        		</div>
-			        		<div>
-			          				<label for="number">Anzahl der zuplanenden Maischevorgänge:</label>
-			          				<input type="number" class="validate" name="anzahlRasten">
-			        		</div>
-			      			<button type="submit" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">save</i></button>
+				  <div class="col s12 m7">
+				    <div class="card">
+				      <div class="card-content">
+					<span class="card-title">Eigenen Brauvorgang erstellen</span>
+			          	<form action="eigen.php" method="post">
+			          	  <div>
+			          	    <label for="text">Name ihres Brauvorgangs</label>
+			          	    <input type="text" class="validate" name="user">
+			        	  </div>
+			        	  <div>
+			          	    <label for="number">Anzahl der zuplanenden Maischevorgänge:</label>
+			          	    <input type="number" class="validate" name="anzahlRasten">
+			        	  </div>
+			      		  <button type="submit" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">save</i></button>
 			      		</form>
-							</div>
-						</div>
-					</div>
+				      </div>
+				    </div>
+			          </div>
 					<div class="col s12 m5">
 						<div class="card">
 							<div class="card-content">
