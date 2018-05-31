@@ -38,7 +38,7 @@
   counter INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   progress INT(3),
   temperature DECIMAL(7,3))";
-  var_dump($sql);
+
   if($conn->query($sql) === TRUE){
 
   }else{

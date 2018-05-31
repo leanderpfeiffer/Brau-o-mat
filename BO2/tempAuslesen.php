@@ -5,7 +5,10 @@ function getTerm(){
   $fp = fopen("/sys/devices/w1_bus_master1/28-051670b0a3ff/w1_slave","r");
   if($fp){
     $zeile = fread($fp, 200);
-    $termStr = substr($zeile,-6);
+$zeile = substr($zeile, -15);
+	$beginTemp = strpos($zeile,"=");
+$termStr = substr($zeile,$beginTemp - strlen($zeile)+1);
+
     $term = floatval($termStr);
     $term = $term / 1000;
     fclose($fp);

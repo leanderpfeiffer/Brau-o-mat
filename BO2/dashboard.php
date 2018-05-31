@@ -163,7 +163,7 @@
         }
         if(getActiveTimer()==0 && getRightTemp()==1){
           getStartTime();
-          setTimeout(setActiveTimer(1),2000);
+   
         }
 
       }
@@ -174,6 +174,7 @@
         xmlhttp.onreadystatechange = function() {
           if(this.readyState == 4 && this.status == 200){
             setCountDownDate(this.responseText);
+		setActiveTimer(1)
             console.log(getCountDownDate());
           }
         };
