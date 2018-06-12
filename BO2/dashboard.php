@@ -51,29 +51,36 @@
           // Hintergrundfarbe des Timers wird wieder weiß
           document.getElementById("Timer").classList.remove('teal');
           document.getElementById("TimerContent").innerHTML = "Bitte erhitzen Sie die Temperatur um den Timer zu starten";
+	//Wenn der Button vor der Aktualisierung gedrückt wurde, wird der Timer bereit gemacht
         }
       }
       var buttonPressed1 = <?php echo $buttonPressed; ?>;
       console.log(buttonPressed1);
       var timerStart = 0;
       var countDownDate = 0;
-      //Daten zum aktuellen Prozess werden gespeichert
+   
       var richtTemp = <?php if(0 < $aktuellerSchritt and $aktuellerSchritt < $fertigBei) {
         echo $data["richtTemp".$aktuellerSchritt];
       }else{
         echo "\"keineRT\"";} ?>;
+      //Wenn eine Richttemperatur vorhanden is wird diese eingesetzt
+      
       var buffer = <?php echo $_SESSION["buffer"]; ?>;
+      //Buffer wird eingesetzt
+
       if(richtTemp != "keineRT"){
         var minTemp = richtTemp - buffer;
         var maxTemp = richtTemp + buffer;
       }
-      //console.log(minTemp+", "+maxTemp+", "+buffer);
+    
 
 //####################################################################################
 
       function makeButton(){
         var card = document.getElementById("TimerContent");
         card.innerHTML="";
+	//Text wird aus dem Timerfeld entfernt
+	      
         var button = document.createElement("button");
         var buttonText = document.createTextNode("Weiter");
         button.setAttribute("onclick", "NextStep()");
@@ -81,8 +88,11 @@
         button.classList.add("btn");
         button.classList.add("waves-effect");
         button.classList.add("waves-light");
+	//Button wird erstellt und mit Attributen modifiziert
+	      
         button.appendChild(buttonText);
         card.appendChild(button);
+	//Text wird in Button eingesetzt und Button ins Feld
         }
 //####################################################################################
 
@@ -103,24 +113,21 @@
         var temperatur = parseFloat(temperaturStr);
 
         if(richtTemp != "keineRT"){
+	//Prüfen, ob eine Richttemperatur vorhanden ist
           if(temperatur > maxTemp){
-
-            document.getElementById("warningHot").classList.remove("transparent");
-            console.log("Heiß");
+	    document.getElementById("warningHot").classList.remove("transparent");
             setRightTemp(1);
+ 	    //Warnung wird angezeigt und Timer gestartet
+		  
           }else if(temperatur < minTemp){
-
-            document.getElementById("warningCold").classList.remove("transparent");
-            console.log("Kalt");
+	    document.getElementById("warningCold").classList.remove("transparent");
+		  //Warnung wird angezeigt
 
           }else if(minTemp< temperatur && temperatur < maxTemp){
-
-            document.getElementById("warningHot").classList.add("transparent");
+	    document.getElementById("warningHot").classList.add("transparent");
             document.getElementById("warningCold").classList.add("transparent");
-            //Wenn die Temperatur den Idealwert erreicht hat wird der Timer gestartet
+            //Warnungen werden verborgen und Timer gestartet
             setRightTemp(1);
-            console.log("Perfekt");
-
           }
         }
       }
@@ -156,7 +163,7 @@
         }
         if(getActiveTimer()==0 && getRightTemp()==1){
           getStartTime();
-   
+   	//Wenn der Timer noch nicht gestartet wurde, aber die Temperatur stimmt, wir der Endzeitpunkt geladen
         }
 
       }
@@ -168,7 +175,6 @@
           if(this.readyState == 4 && this.status == 200){
             setCountDownDate(this.responseText);
 		setActiveTimer(1)
-            console.log(getCountDownDate());
           }
         };
         xmlhttp.open("GET","getStartTime.php",true);
