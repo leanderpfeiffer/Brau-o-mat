@@ -14,7 +14,7 @@ if($startTime){
   $startTime = time() + $time;
   echo $startTime;
   $_SESSION["startTime".$aktuellerSchritt] = $startTime;
-  //Ansonsten wird mithilfe der aktuellen Zeit eine neue 			berechnet und in der Session gespeichert
+  //Ansonsten wird mithilfe der aktuellen Zeit eine neue berechnet und in der Session gespeichert
 }
 
  ?>
