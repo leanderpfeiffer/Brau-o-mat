@@ -55,7 +55,6 @@
       }
       var buttonPressed1 = <?php echo $buttonPressed; ?>;
       console.log(buttonPressed1);
-      var timerGo = 0;
       var timerStart = 0;
       var countDownDate = 0;
       //Daten zum aktuellen Prozess werden gespeichert
@@ -113,7 +112,6 @@
 
             document.getElementById("warningCold").classList.remove("transparent");
             console.log("Kalt");
-            var timerGo = 1;
 
           }else if(minTemp< temperatur && temperatur < maxTemp){
 
@@ -134,31 +132,26 @@
       function conTime(){
 
         if(getActiveTimer() == 1){
-          var countDownDate = getCountDownDate();
+          var endZeit = getCountDownDate();
+          var jetztZeit = new Date().getTime();
+	  var dauer = endZeit * 1000 - jetztZeit;
+	  //Die Differenz zwischen Endzeitpunkt und aktueller Zeit wird gebildet
+          
+          var minuten = Math.floor((dauer % (1000 * 60 * 60)) / (1000 * 60));
+          var sekunden = Math.floor((dauer % (1000 * 60)) / 1000);
+	  //Die Zeit wird in Minuten und Sekunden umgewandelt
 
-          // Get todays date and time
-          var now = new Date().getTime();
-
-          // Find the distance between now an the count down date
-          var distance = countDownDate * 1000 - now;
-          console.log(countDownDate);
-          console.log(now);
-          console.log(distance);
-          // Time calculations for days, hours, minutes and seconds
-          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          // Display the result in the element with id="demo"
-          document.getElementById("TimerContent").innerHTML =
-          + minutes + "m " + seconds + "s ";
-
-          // If the count down is finished, write some text
-          if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("Timer").classList.add("teal");
+ 
+          document.getElementById("TimerContent").innerHTML = minuten + "m " + sekunden + "s ";
+	  //Das Ergebnis wird in gemischter Schreibweise ausgegeben
+          
+          if (dauer < 0) {
+            clearInterval(zeitInterval);
+	    //Timer wird gestoppt
+            
+	    document.getElementById("Timer").classList.add("teal");
             makeButton();
+	    //Button wird erzeugt
           }
         }
         if(getActiveTimer()==0 && getRightTemp()==1){
@@ -183,7 +176,7 @@
 
       }
 
-      var x = setInterval(conTime, 1000);
+      var zeitInterval = setInterval(conTime, 1000);
 
 
 //####################################################################################
