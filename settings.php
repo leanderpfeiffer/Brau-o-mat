@@ -1,59 +1,81 @@
+<?php
+  session_start();
+// Nutzer Angeben in Session speichern
+  $anzahlRasten = $_SESSION["anzahlRasten"];
+	$_SESSION["last_page"]= "settings";
+	$data = $_SESSION["data"];
+?>
+
 <html>
 <head>
-	<title>Brau-omat</title>
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<meta charset="utf-8">
+	<title>Brau-o-mat</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
+
+		<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<style media="screen">
+	.header{
+		color: #009688;
+		font-weight: 300;
+	}
+	</style>
 </head>
 <body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		
-		<div class="navbar-header">
-			<a class="navbar-brand" href="/Brau-omat/index.php">Brau-omat</a>
+	<nav>
+		<div class="nav-wrapper teal">
+			<div class="row">
+				<div class="col s0 m1 l1"></div>
+				<div class="col m5">
+					<a href="#" class="brand-logo" id="brand-logo">Brau-o-mat</a>
+				</div>
+				<div class="col m6">
+					<ul id="nav-mobile" class="right hide-on-med-and-down">
+						<li><a href="dashboard.php">Dashboard</a></li>
+						<li><a href="graph.php">Graph</a></li>
+						<li  class="active"><a href="#">Einstellungen</a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
-		<ul class="navbar-nav">
-			<li class="nav-item"><a href="/Brau-omat/home.php" class="nav-link">Home</a></li>
-			<li class="nav-item"><a href="#news" class="nav-link">News</a></li>
-			<li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-			<li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-			<li class="nav-item active"><a href="#" class="nav-link">Settings</a></li>
-		</ul>
 	</nav>
 	<div class="container">
-			<h1 class="display-4">Settings</h1>
-			<hr>
-			<form action="processing.php" method="post" class="col-sm-4">
-		<?php
-			session_start();
-			$count=$_SESSION["count"];
-			$_SESSION["ref"] = "settings";
-			$data = $_SESSION["data"];
-			for($i = 1; $i <= $count; $i++){
-				echo "<div class=\"form-group\">";
-				echo "<h4>Vorgang ".$i."</h4>";
-				echo "<label for=\"text\">Name:<label>";
-				echo "<input type=\"text\" class=\"form-control\" name=\"name".$i."\" placeholder=\"".$data["name".$i]."\">";
-				echo "<label for=\"number\">Zeit (in Minuten):<label>";
-				echo "<input type=\"number\" class=\"form-control\" name=\"time".$i."\" placeholder=\"".$data["time".$i]."\">";
-				echo "<label for=\"number\">Richttemperatur (in °C):<label>";
-				echo "<input type=\"number\" class=\"form-control\" name=\"temp".$i."\" placeholder=\"".$data["temp".$i]."\">";
-				echo "</div>";
+			<h2 class="header">Einstellungen</h2>
+			<br>
+			<form action="processing.php" method="post">
+	      <div class="row">
+			<?php
+				// Gibt für jede Rast eine Karte aus
+				for($i = 1; $i <= $anzahlRasten; $i++){
+					echo "<div class=\"col s12 m6 l4\">";
+					echo "<div class=\"card\">";
+					echo "<div class=\"card-content\">";
+					echo "<span class=\"card-title\">Vorgang ".$i."</span>";
+					echo "<label for=\"text\">Name:<label>";
+					echo "<input type=\"text\" name=\"schrittName".$i."\" placeholder=\"".$data["schrittName".$i]."\">";
+					echo "<label for=\"number\">Zeit (in Minuten):<label>";
+					echo "<input type=\"number\" class=\"validate\" name=\"zeit".$i."\" placeholder=\"".$data["zeit".$i] / 60 ."\">";
+					echo "<label for=\"number\">Richttemperatur (in °C):<label>";
+					echo "<input type=\"number\" class=\"validate\" name=\"richtTemp".$i."\" placeholder=\"".$data["richtTemp".$i]."\">";
+					echo "</div>";
+					echo "</div>";
+					echo "</div>";
 				}
 			?>
-			<div class="form-group">
-			<label for="number">Buffer (in °C):<label>
-			<input type="number" class="form-control" name="buffer" placeholder="<?php echo $_SESSION["buffer"];  ?>">
+			<div class="col s12 m6 l4">
+			<div class="card ">
+				<div class="card-content">
+					<label for="number">Buffer:</label>
+					<input type="number" class="validate" name="buffer" placeholder="<?php echo $_SESSION["buffer"];  ?>">
+					<button type="submit" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">save</i></button>
 			</div>
-			<button type="submit" class="btn btn-primary">Prozess Starten</button>
-			<form>
-			
+		</div>
+		</div>
+			</div>
+		</form>
 		</div>
 
-		<!-- JQuery Plugin -->
-	<script src="assets/js/jquery.min.js"></script>
-
-	<!-- Popper Plugin -->
-	<script src="assets/js/popper.min.js"></script>
-	
-	<!-- Bootstrap JS Plugin -->
-	<script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>

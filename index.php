@@ -1,48 +1,71 @@
+<!DOCTYPE html>
 <?php
 	session_start();
 	session_unset();
 	session_destroy();
+	// Zerstört die letzte Session
 ?>
-
 <html>
-<head>
-	<title>Brau-omat</title>
-	<!-- <link href="main.css" rel="stylesheet" type="text/css" /> -->
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Brau-omat</a>
-		</div>
-		<ul class="navbar-nav">
-			<li class="nav-item"><a href="#Home" class="nav-link disabled">Home</a></li>
-			<li class="nav-item"><a href="#News" class="nav-link disabled">News</a></li>
-			<li class="nav-item"><a href="#Contact" class="nav-link disabled">Contact</a></li>
-			<li class="nav-item"><a href="#About" class="nav-link disabled">About</a></li>
-			<li class="nav-item"><a href="#Settings" class="nav-link disabled">Settings</a></li>
-		</ul>
-	</nav>
+  <head>
+    <meta charset="utf-8">
+    <title>Brau-o-mat</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
+  		<!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+		<style media="screen">
+			.header{
+				color: #009688;
+				font-weight: 300
+			}
+		</style>
 
-	<div class="container jumbotron">
-		<h1>Brau-omat</h1>
-		<form action="login.php" method="post"class="col-sm-4">
-			<div class="form-group">
-				<label for="number">Anzahl der zuplanenden Maischevorgänge:</label>
-				<input type="number" class="form-control" name="count">
+	</head>
+  <body>
+
+		<nav>
+      <div class="nav-wrapper teal">
+        <a href="#" class="brand-logo center">Brau-o-mat</a>
+      </div>
+    </nav>
+		<div class="container">
+			<h2 class="header">Willkommen</h2>
+			<p class="flow-text">!Willkommenstext</p>
+			<div class="row">
+				<div class="col s12 m7">
+					<div class="card">
+						<div class="card-content">
+							<span class="card-title">Eigenen Brauvorgang erstellen</span>
+			        <form action="eigen.php" method="post">
+			        	<div>
+			          	<label for="text">
+			              Name ihres Brauvorgangs
+			            </label>
+			          	<input type="text" class="validate" name="user">
+			        	</div>
+			        	<div>
+			          	<label for="number">Anzahl der zuplanenden Maischevorgänge:</label>
+			          	<input type="number" class="validate" name="anzahlRasten">
+			        	</div>
+			      		<button type="submit" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">save</i></button>
+			      	</form>
+						</div>
+					</div>
+				</div>
+				<div class="col s12 m5">
+					<div class="card">
+						<div class="card-content">
+							<span class="card-title">Vorlage Aussuchen</span>
+							<p>Einen von mehreren Vorlagen auswählen und ohne große Sorgen Brauen.</p>
+							<br>
+							<form action="vorlagen.php" method="post">
+								<button type="submit" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">search</i></button>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">Los gehts!</button>
-		</form>
-	</div>
-
-	<!-- JQuery Plugin -->
-	<script src="assets/js/jquery.min.js"></script>
-
-	<!-- Popper Plugin -->
-	<script src="assets/js/popper.min.js"></script>
-	
-	<!-- Bootstrap JS Plugin -->
-	<script src="assets/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>
